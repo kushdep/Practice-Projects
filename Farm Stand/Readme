@@ -1,0 +1,8 @@
+This Project is Just a Basic CRUD Practice Done using EJS, Express, Node, Mongo DB
+
+1. We can Add Product
+2. We can Edit Product
+3. We can filter by category
+4. We can delete any product
+
+
