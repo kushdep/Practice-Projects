@@ -6,6 +6,13 @@ const methodOverride = require('method-override')
 const AppError = require('./AppError')
 const Farm = require('./models/farm')
 const Product = require('./models/product');
+const session = require('express-session')
+const flash = require('connect-flash')
+
+const sessionOptions = {secret:'SecretIsSecret', resave:false, saveUnitialise:false}
+app.use(session(sessionOptions))
+
+app.use(flash())
 
 mongoose.connect('mongodb://localhost:27017/farmStand', { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => {
@@ -23,6 +30,10 @@ app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'))
 
+app.use((req,res,next)=>{
+    res.locals.messages= req.flash('success')
+    next()
+})
 
 
 //FARM ROUTES
@@ -43,7 +54,7 @@ app.post('/farms/:id/products',async(req,res)=>{
     const NewPrd = new Product({name,price,category})
     NewPrd.farm=thisFarm
     thisFarm.products.push(NewPrd)
-    await NewPrd.save()
+    await NewPrd.save() 
     await thisFarm.save()
     res.redirect(`/farms/${id}`)
 })
@@ -62,6 +73,7 @@ app.get('/farms',async(req,res)=>{
 app.post('/farms',async(req,res)=>{
     const farm = new Farm(req.body)
     await farm.save();
+    req.flash('success','Successfully Added a Farm')
     res.redirect('/farms')
 })
 
