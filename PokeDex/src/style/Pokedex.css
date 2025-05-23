@@ -1,0 +1,8 @@
+.pokeDiv {
+    display: flex;
+    gap: 24px;              /* Space between cards inside the div */
+    background-color:cadetblue;
+    padding: 16px;          /* Optional: adds space inside the div */
+    border-radius: 8px;     /* Optional: rounded corners */
+    margin-bottom: 24px;    /* Space between two .pokeDiv containers */
+}
