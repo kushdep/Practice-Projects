@@ -1,19 +1,17 @@
 import { board } from "../assets/GameData.js";
-import { useState } from "react";
 import "../index.css";
 
-export default function GameBoard({ chngActivePlayer, activePlyrSymbol }) {
-  const [gameBoard, setGameBoard] = useState(board);
-  function handleSelectSquare(rowIdx, colIdx) {
-    //updated values in an immutable way
-    setGameBoard((prevState) => {
-      const updatedBoard = [...prevState.map((e) => [...e])];
-      updatedBoard[rowIdx][colIdx] = activePlyrSymbol;
-      return updatedBoard;
-    });
-
-    chngActivePlayer();
+export default function GameBoard({ onSelectSquare, turns }) {
+  let gameBoard=board
+  // for(let i=0;i<turns.length;i++){
+  //   gameBoard[turns[i].square.row][turns[i].square.col]=turns[i].plyr;
+  // }
+  for(const turn of turns){
+    const {square,plyr}=turn
+    const {row,col}=square
+    gameBoard[row][col]=plyr
   }
+  console.log(gameBoard)
 
   return (
     <ol id="game-board">
@@ -24,7 +22,7 @@ export default function GameBoard({ chngActivePlayer, activePlyrSymbol }) {
               {row.map((col, colIdx) => {
                 return (
                   <li key={colIdx}>
-                    <button onClick={() => handleSelectSquare(rowIdx, colIdx)}>
+                    <button onClick={() => onSelectSquare(rowIdx, colIdx)}>
                       {col}
                     </button>
                   </li>
@@ -37,3 +35,18 @@ export default function GameBoard({ chngActivePlayer, activePlyrSymbol }) {
     </ol>
   );
 }
+
+/*
+We will not manage our game state in this component
+  const [gameBoard, setGameBoard] = useState(board);
+  function handleSelectSquare(rowIdx, colIdx) {
+    //updated values in an immutable way
+
+    setGameBoard((prevState) => {
+      const updatedBoard = [...prevState.map((e) => [...e])];
+      updatedBoard[rowIdx][colIdx] = activePlyrSymbol;
+      return updatedBoard;
+    });
+    chngActivePlayer();
+    onPlayerTurn(rowIdx, colIdx);
+  }*/
