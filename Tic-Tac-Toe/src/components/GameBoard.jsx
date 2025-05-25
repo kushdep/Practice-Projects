@@ -1,28 +1,19 @@
-import { board } from "../assets/GameData.js";
 import "../index.css";
 
-export default function GameBoard({ onSelectSquare, turns }) {
-  let gameBoard=board
-  // for(let i=0;i<turns.length;i++){
-  //   gameBoard[turns[i].square.row][turns[i].square.col]=turns[i].plyr;
-  // }
-  for(const turn of turns){
-    const {square,plyr}=turn
-    const {row,col}=square
-    gameBoard[row][col]=plyr
-  }
-  console.log(gameBoard)
-
+export default function GameBoard({ onSelectSquare, updatedGameBoard }) {
   return (
     <ol id="game-board">
-      {gameBoard.map((row, rowIdx) => {
+      {updatedGameBoard.map((row, rowIdx) => {
         return (
           <li key={rowIdx}>
             <ol>
               {row.map((col, colIdx) => {
                 return (
                   <li key={colIdx}>
-                    <button onClick={() => onSelectSquare(rowIdx, colIdx)}>
+                    <button
+                      onClick={() => onSelectSquare(rowIdx, colIdx)}
+                      disabled={col !== null}
+                    >
                       {col}
                     </button>
                   </li>
@@ -50,3 +41,6 @@ We will not manage our game state in this component
     chngActivePlayer();
     onPlayerTurn(rowIdx, colIdx);
   }*/
+// for(let i=0;i<turns.length;i++){
+//   gameBoard[turns[i].square.row][turns[i].square.col]=turns[i].plyr;
+// }
