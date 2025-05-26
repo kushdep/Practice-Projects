@@ -3,6 +3,7 @@ import Player from "./components/Player";
 import Logs from "./components/Logs";
 import { useState } from "react";
 import { WINNING_COMB, board } from "./assets/GameData";
+import GameOver from "./components/GameOver";
 
 function deriveActivePlayer(gameTurns) {
   let currPlayer = "X";
@@ -17,8 +18,8 @@ function App() {
 
   const activePlayer = deriveActivePlayer(gameTurn);
 
-  let gameBoard = board;
-  let winner;
+  let gameBoard = [...board.map((e) => [...e])];
+  let win;
   for (const turn of gameTurn) {
     const { square, plyr } = turn;
     const { row, col } = square;
@@ -34,10 +35,15 @@ function App() {
       firstSymbol &&
       firstSymbol === secondSymbol &&
       firstSymbol === thirdSymbol
-    ) {
-      winner = firstSymbol;
+    ){
+      win = firstSymbol;
     }
   }
+  console.log(gameBoard.length)
+  console.log(win)
+
+  const hasDraw = gameTurn.length === 9 && !win;
+  console.log(hasDraw)
 
   function handleSelectSquare(rowIdx, colIdx) {
     setGameTurn((prevTurn) => {
@@ -48,6 +54,10 @@ function App() {
       ];
       return updateTurn;
     });
+  }
+
+  function handleRematch() {
+    setGameTurn([]);
   }
 
   return (
@@ -65,7 +75,9 @@ function App() {
             isActive={activePlayer === "O"}
           />
         </ol>
-        {winner && <p>You Win {winner}</p>}
+        {(win || hasDraw) && (
+          <GameOver winner={win} onRematch={handleRematch} />
+        )}
         <GameBoard
           onSelectSquare={handleSelectSquare}
           updatedGameBoard={gameBoard}
