@@ -2,6 +2,7 @@ import Player from "./components/Player.jsx";
 import Timer from "./components/TimeChallenger.jsx";
 
 function App() {
+
   return (
     <>
       <Player />
