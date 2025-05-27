@@ -1,14 +1,28 @@
 import Sidebar from "./components/Sidebar";
 import Pages from "./components/Pages";
+import { useState } from "react";
 
 function App() {
+  const [addPrjState,setAddPrjState]= useState(false)
+  const [savePrj,setSavePrj] = useState({})
+
+  function handlePrjState() {
+    console.log(addPrjState);
+    setAddPrjState((prev) => {
+      const newState = !prev;
+      console.log("2 " + newState);
+      return newState;
+    });
+  }
+
+
   return (
-    <div className=" flex flex-row ">
-      <section className="w-80 h-screen bg-black rounded-tr-lg mt-10">
-        <Sidebar />
+    <div className="flex flex-row h-screen mt-10">
+      <section className="w-1/4 bg-black rounded-tr-lg h-full">
+        <Sidebar onChngAddPrjStt={handlePrjState} addPrjvar={addPrjState}/>
       </section>
-      <section className="mt-10 ml-10">
-        <Pages />
+      <section className="w-4/5 ml-10 h-full">
+        <Pages onChngAddPrjStt={handlePrjState} addPrjvar={addPrjState}/>
       </section>
     </div>
   );
