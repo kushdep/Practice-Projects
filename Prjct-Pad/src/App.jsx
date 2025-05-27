@@ -20,7 +20,7 @@ function App() {
       <section className="w-1/4 bg-black rounded-tr-lg h-full">
         <Sidebar onChngAddPrjStt={handlePrjState} addPrjvar={addPrjState}/>
       </section>
-      <section className="w-4/5 h-full">
+      <section className="w-4/5 ml-10 h-full">
         <Pages onChngAddPrjStt={handlePrjState} addPrjvar={addPrjState}/>
       </section>
     </div>
