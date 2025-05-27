@@ -4,7 +4,6 @@ import { useState } from "react";
 
 function App() {
   const [addPrjState,setAddPrjState]= useState(false)
-  const [savePrj,setSavePrj] = useState({})
 
   function handlePrjState() {
     console.log(addPrjState);
