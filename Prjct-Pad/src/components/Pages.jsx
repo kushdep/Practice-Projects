@@ -5,8 +5,8 @@ export default function Pages({onChngAddPrjStt,addPrjvar}) {
   return (
     <>
       <div className="justify-con">
-        {/* {!addPrjvar && <DefaultPage chngState={onChngAddPrjStt}/>} */}
-        {!addPrjvar && <AddprjForm/>}
+        {!addPrjvar && <DefaultPage chngState={onChngAddPrjStt}/>}
+        {addPrjvar && <AddprjForm/>}
       </div>
     </>
   );

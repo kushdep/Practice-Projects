@@ -1,7 +1,7 @@
 export default function AddprjForm() {
   return (
     <>
-      <div className="flex justify-end ">
+      <div className="flex justify-end mt-5">
         <button className="text-black text-xl w-20 h-10 rounded-md m-2">
           Cancel
         </button>
