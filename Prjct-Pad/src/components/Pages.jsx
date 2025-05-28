@@ -8,7 +8,8 @@ export default function Pages({
   handlePrjDetails,
   projects,
   prjKey,
-  active
+  delPrjFn,
+
 }) {
   const projectData=projects.filter((e)=> prjKey===e.key)
   console.log(projectData)
@@ -23,7 +24,7 @@ export default function Pages({
             cancelState={onChngAddPrjStt}
           />
         )}
-        {projectData[0] && <ShowProject project={projectData[0]} />}
+        {(projectData[0] && !addPrjvar) && <ShowProject project={projectData[0]} deletePrj={delPrjFn}/>}
       </div>
     </>
   );

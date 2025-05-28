@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import { v4 as uuid } from "uuid";
 
 export default function AddprjForm({ onChngPrjData, cancelState }) {
   const title = useRef();
@@ -17,6 +18,7 @@ export default function AddprjForm({ onChngPrjData, cancelState }) {
         <button
           onClick={() =>
             onChngPrjData({
+              key:uuid(),
               title: title.current.value,
               desc: desc.current.value,
               date: date.current.value,

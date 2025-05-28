@@ -1,6 +1,6 @@
 import Task from "./Task";
 
-export default function ShowProject({project}) {
+export default function ShowProject({project,deletePrj}) {
   console.log(project)
   console.log("JSON"+JSON.stringify(project))
   return (
@@ -10,7 +10,7 @@ export default function ShowProject({project}) {
           <h1 className="basis-4/5 text-black text-5xl font-semibold">
             {project.title}
           </h1>
-          <button className="text-white bg-black basis-1/5 font-mono text-xl h-10 rounded-md m-2">
+          <button onClick={()=>deletePrj(project.key)} className="text-white bg-black basis-1/5 font-mono text-xl h-10 rounded-md m-2">
             Delete
           </button>
         </div>

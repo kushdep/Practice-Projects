@@ -7,14 +7,27 @@ export default function Task() {
 
   function handleSetTask() {
     setTask((prev) => {
+      console.log("0.0 task = "+taskRef.current.value)
       const data = {
         key: uuid(),
         taskDesc: taskRef.current.value,
       };
-      taskRef.current.value=""
+      console.log("0.1 task = "+taskRef.current.value)
+      console.log("0.2 task = "+JSON.stringify(data))
       const updatedData = [...prev, data];
+      console.log("0.3 task = "+JSON.stringify(updatedData))
+      console.log("0.4 task = "+JSON.stringify(updatedData))
       return updatedData;
     });
+    console.log("taskRef = "+taskRef.value)
+    // taskRef.current.value=""
+    console.log("2 after task = "+taskRef.current.value)
+  }
+  function handleDelete(key) {
+    setTask((prev)=>{
+      const updated = prev.filter((e)=>e.key!==key)
+      return updated;
+    })
   }
 
   return (
@@ -30,7 +43,6 @@ export default function Task() {
             />
             <button
               className="text-black font-mono text-lg font-normal"
-              
               onClick={handleSetTask}
             >
               Add Task
@@ -42,11 +54,11 @@ export default function Task() {
         <ul className="grid grid-cols-2 gap-4">
           {task[0] &&
             task.map((e) => (
-              <div className="flex flex-row bg-stone-100 drop-shadow-md ">
+              <div key={e.key} className="flex flex-row bg-stone-100 drop-shadow-md ">
                 <li className="text-lg w-4/5 font-mono  p-2 flex flex-row">
                   {e.taskDesc}
                 </li>
-                <button className="w-1/5 text-lg font-mono">Clear</button>
+                <button onClick={()=>handleDelete(e.key)} className="w-1/5 text-lg font-mono">Clear</button>
               </div>
             ))}
         </ul>
