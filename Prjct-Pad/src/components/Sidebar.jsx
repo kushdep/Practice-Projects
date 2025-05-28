@@ -18,7 +18,7 @@ export default function Sidebar({ onChngAddPrjStt, addPrjvar, projectsTitle }) {
 
       <div className="flex flex-col gap-5">
         {projectsTitle.map((e) => (
-          <button className="text-white text-xl text-left ml-10 h-10">
+          <button className="text-zinc-500 text-xl text-left ml-10 h-10">
             {e.title}
           </button>
         ))}
