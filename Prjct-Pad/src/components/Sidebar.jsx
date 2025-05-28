@@ -1,5 +1,11 @@
-export default function Sidebar({ onChngAddPrjStt, addPrjvar, projectsTitle }) {
-  console.log("Sidebar " + JSON.stringify(projectsTitle));
+export default function Sidebar({
+  onChngAddPrjStt,
+  addPrjvar,
+  projects,
+  openPrj,
+  active,
+}) {
+  console.log("Sidebar " + JSON.stringify(projects));
   return (
     <div className="flex flex-col gap-10">
       <div>
@@ -17,8 +23,12 @@ export default function Sidebar({ onChngAddPrjStt, addPrjvar, projectsTitle }) {
       </div>
 
       <div className="flex flex-col gap-5">
-        {projectsTitle.map((e) => (
-          <button className="text-zinc-500 text-xl text-left ml-10 h-10">
+        {projects.map((e) => (
+          <button
+            key={e.key}
+            onClick={() => openPrj(e.key)}
+            className="text-zinc-500 text-2xl text-left ml-10 h-10 font-mono"
+          >
             {e.title}
           </button>
         ))}
