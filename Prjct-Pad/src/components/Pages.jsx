@@ -1,6 +1,6 @@
 import AddprjForm from "./AddPrjForm";
 import DefaultPage from "./DefaultPage";
-import ShowProject from "./ShowProject"
+import ShowProject from "./ShowProject";
 
 export default function Pages({
   onChngAddPrjStt,
@@ -10,14 +10,14 @@ export default function Pages({
   return (
     <>
       <div className="">
-        {/* {!addPrjvar && <DefaultPage chngState={onChngAddPrjStt} />}
+        {!addPrjvar && <DefaultPage chngState={onChngAddPrjStt} />}
         {addPrjvar && (
           <AddprjForm
             onChngPrjData={handlePrjDetails}
             cancelState={onChngAddPrjStt}
           />
-        )} */}
-        <ShowProject/>
+        )}
+        {/* <ShowProject/> */}
       </div>
     </>
   );

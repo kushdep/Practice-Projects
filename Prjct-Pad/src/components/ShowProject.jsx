@@ -8,15 +8,15 @@ export default function ShowProject() {
           <h1 className="basis-4/5 text-black text-5xl font-semibold">
             Learning React
           </h1>
-          <button className="text-black basis-1/5 text-xl w-20 h-10 rounded-md m-2">
+          <button className="text-white bg-black basis-1/5 font-mono text-xl h-10 rounded-md m-2">
             Delete
           </button>
         </div>
         <div className="flex flex-col gap-6">
-          <h1 className="text-xl basis-1/5 text-zinc-500 font-thin">
+          <h1 className="text-xl basis-1/5 font-mono text-zinc-500 font-thin">
             Dec 29,2024
           </h1>
-          <h1 className="basis-4/5 text-xl text-zinc-700">
+          <h1 className="basis-4/5 text-xl font-mono text-zinc-700">
             Practice Practice Practice!!
           </h1>
         </div>
