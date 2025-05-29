@@ -1,8 +1,6 @@
 import Task from "./Task";
 
-export default function ShowProject({project,deletePrj}) {
-  console.log(project)
-  console.log("JSON"+JSON.stringify(project))
+export default function ShowProject({ project, deletePrj, onAddTask, delTsk }) {
   return (
     <div className="flex flex-col h-screen">
       <section className="h-1/3 flex flex-col mt-6 gap-4">
@@ -10,7 +8,10 @@ export default function ShowProject({project,deletePrj}) {
           <h1 className="basis-4/5 text-black text-5xl font-semibold">
             {project.title}
           </h1>
-          <button onClick={()=>deletePrj(project.key)} className="text-white bg-black basis-1/5 font-mono text-xl h-10 rounded-md m-2">
+          <button
+            onClick={() => deletePrj(project.key)}
+            className="text-white bg-black basis-1/5 font-mono text-xl h-10 rounded-md m-2"
+          >
             Delete
           </button>
         </div>
@@ -25,7 +26,7 @@ export default function ShowProject({project,deletePrj}) {
       </section>
       <hr className="my-4 border-t-2 border-zinc-300 rounded-full mr-60" />
       <section className="h-3/5 ">
-        <Task />
+        <Task addTask={onAddTask} prj={project} handleDelete={delTsk} />
       </section>
     </div>
   );

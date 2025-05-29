@@ -9,22 +9,30 @@ export default function Pages({
   projects,
   prjKey,
   delPrjFn,
-
+  addTask,
+  delTaskFn,
 }) {
-  const projectData=projects.filter((e)=> prjKey===e.key)
-  console.log(projectData)
-  console.log(projectData[0])
+  const projectData = projects.filter((e) => prjKey === e.key);
+  console.log(projectData);
+  console.log(projectData[0]);
   return (
     <>
       <div className="">
-        {(!addPrjvar && !prjKey) && <DefaultPage chngState={onChngAddPrjStt} />}
+        {!addPrjvar && !prjKey && <DefaultPage chngState={onChngAddPrjStt} />}
         {addPrjvar && (
           <AddprjForm
             onChngPrjData={handlePrjDetails}
             cancelState={onChngAddPrjStt}
           />
         )}
-        {(projectData[0] && !addPrjvar) && <ShowProject project={projectData[0]} deletePrj={delPrjFn}/>}
+        {projectData[0] && !addPrjvar && (
+          <ShowProject
+            project={projectData[0]}
+            deletePrj={delPrjFn}
+            onAddTask={addTask}
+            delTsk={delTaskFn}
+          />
+        )}
       </div>
     </>
   );

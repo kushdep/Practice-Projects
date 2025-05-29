@@ -1,33 +1,10 @@
-import { useRef, useState } from "react";
-import { v4 as uuid } from "uuid";
+import { useState } from "react";
 
-export default function Task() {
-  const [task, setTask] = useState([]);
-  const taskRef = useRef();
+export default function Task({ addTask, prj, handleDelete }) {
+  const [task, setTask] = useState("");
 
-  function handleSetTask() {
-    setTask((prev) => {
-      console.log("0.0 task = "+taskRef.current.value)
-      const data = {
-        key: uuid(),
-        taskDesc: taskRef.current.value,
-      };
-      console.log("0.1 task = "+taskRef.current.value)
-      console.log("0.2 task = "+JSON.stringify(data))
-      const updatedData = [...prev, data];
-      console.log("0.3 task = "+JSON.stringify(updatedData))
-      console.log("0.4 task = "+JSON.stringify(updatedData))
-      return updatedData;
-    });
-    console.log("taskRef = "+taskRef.value)
-    // taskRef.current.value=""
-    console.log("2 after task = "+taskRef.current.value)
-  }
-  function handleDelete(key) {
-    setTask((prev)=>{
-      const updated = prev.filter((e)=>e.key!==key)
-      return updated;
-    })
+  function handleSetTask(event) {
+    setTask(event.target.value);
   }
 
   return (
@@ -37,13 +14,17 @@ export default function Task() {
           <h1 className="text-black text-3xl  font-medium">Tasks</h1>
           <p className="mr-72">
             <input
-              ref={taskRef}
               className="bg-stone-200 shadow-sm m-5 ml-0 mt-0 h-8 text-xl rounded-sm p-1"
               type="text"
+              onChange={handleSetTask}
+              value={task}
             />
             <button
               className="text-black font-mono text-lg font-normal"
-              onClick={handleSetTask}
+              onClick={() => {
+                addTask(prj.key, task);
+                setTask("");
+              }}
             >
               Add Task
             </button>
@@ -52,13 +33,21 @@ export default function Task() {
       </section>
       <section className="flex flex-col">
         <ul className="grid grid-cols-2 gap-4">
-          {task[0] &&
-            task.map((e) => (
-              <div key={e.key} className="flex flex-row bg-stone-100 drop-shadow-md ">
+          {prj &&
+            prj.tasks.map((e) => (
+              <div
+                key={e.key}
+                className="flex flex-row bg-stone-100 drop-shadow-md "
+              >
                 <li className="text-lg w-4/5 font-mono  p-2 flex flex-row">
                   {e.taskDesc}
                 </li>
-                <button onClick={()=>handleDelete(e.key)} className="w-1/5 text-lg font-mono">Clear</button>
+                <button
+                  onClick={() => handleDelete(e.key, prj.key)}
+                  className="w-1/5 text-lg font-mono"
+                >
+                  Clear
+                </button>
               </div>
             ))}
         </ul>

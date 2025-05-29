@@ -18,10 +18,11 @@ export default function AddprjForm({ onChngPrjData, cancelState }) {
         <button
           onClick={() =>
             onChngPrjData({
-              key:uuid(),
+              key: uuid(),
               title: title.current.value,
               desc: desc.current.value,
               date: date.current.value,
+              tasks: [],
             })
           }
           className="text-white text-xl bg-black w-20 h-10 rounded-md m-2 font-mono"
