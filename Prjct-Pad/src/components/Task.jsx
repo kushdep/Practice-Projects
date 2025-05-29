@@ -1,14 +1,30 @@
-import { useState } from "react";
+import { useState,useRef } from "react";
+import Modal from "./Modals";
 
 export default function Task({ addTask, prj, handleDelete }) {
   const [task, setTask] = useState("");
+  const modal = useRef();
 
   function handleSetTask(event) {
     setTask(event.target.value);
   }
 
+  function openModal() {
+    modal.current.showModal();
+  }
+
   return (
     <>
+      <Modal refrence={modal}>
+        <div className="bg-black">
+          <h1 className="text-center font-bold text-xl p-4 text-white font-mono">
+            Invalid Input!!
+          </h1>
+        </div>
+        <p className="font-thin text-black font-mono p-10">
+          please check your input field.
+        </p>
+      </Modal>
       <section className="flex flex-col">
         <div className="flex flex-col gap-5">
           <h1 className="text-black text-3xl  font-medium">Tasks</h1>
@@ -22,8 +38,12 @@ export default function Task({ addTask, prj, handleDelete }) {
             <button
               className="text-black font-mono text-lg font-normal"
               onClick={() => {
-                addTask(prj.key, task);
-                setTask("");
+                if (task === "") {
+                  openModal();
+                } else {
+                  addTask(prj.key, task);
+                  setTask("");
+                }
               }}
             >
               Add Task

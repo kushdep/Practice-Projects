@@ -2,6 +2,7 @@ import Sidebar from "./components/Sidebar";
 import Pages from "./components/Pages";
 import { useState } from "react";
 import { v4 as uuid } from "uuid";
+import Modal from "./components/Modals";
 
 function App() {
   const [addPrjState, setAddPrjState] = useState(false);

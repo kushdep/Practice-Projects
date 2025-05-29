@@ -1,13 +1,29 @@
 import { useRef } from "react";
 import { v4 as uuid } from "uuid";
+import Modal from "./Modals";
 
 export default function AddprjForm({ onChngPrjData, cancelState }) {
   const title = useRef();
   const desc = useRef();
   const date = useRef();
+  const modal = useRef();
+
+  function openModal() {
+    modal.current.showModal();
+  }
 
   return (
     <>
+      <Modal refrence={modal}>
+        <div className="bg-black">
+          <h1 className="text-center font-bold text-xl p-4 text-white font-mono">
+            Invalid Input!!
+          </h1>
+        </div>
+        <p className="font-thin text-black font-mono p-10">
+          please check your input field.
+        </p>
+      </Modal>
       <div className="flex justify-end mt-5 font-mono">
         <button
           onClick={cancelState}
@@ -16,15 +32,22 @@ export default function AddprjForm({ onChngPrjData, cancelState }) {
           Cancel
         </button>
         <button
-          onClick={() =>
-            onChngPrjData({
-              key: uuid(),
-              title: title.current.value,
-              desc: desc.current.value,
-              date: date.current.value,
-              tasks: [],
-            })
-          }
+          onClick={() => {
+            if (
+              title.current.value.trim() === "" ||
+              date.current.value.trim() === ""
+            ) {
+              openModal();
+            } else {
+              onChngPrjData({
+                key: uuid(),
+                title: title.current.value,
+                desc: desc.current.value,
+                date: date.current.value,
+                tasks: [],
+              });
+            }
+          }}
           className="text-white text-xl bg-black w-20 h-10 rounded-md m-2 font-mono"
         >
           Save
