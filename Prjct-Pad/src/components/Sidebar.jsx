@@ -22,17 +22,19 @@ export default function Sidebar({
         )}
       </div>
 
-      <div className="flex flex-col gap-5">
+      <ul className="flex flex-col gap-5">
         {projects.map((e) => (
-          <button
-            key={e.key}
-            onClick={() => openPrj(e.key)}
-            className="text-zinc-500 text-2xl text-left ml-10 h-10 font-mono"
-          >
-            {e.title}
-          </button>
+          <li className="hover:bg-white">
+            <button
+              key={e.key}
+              onClick={() => openPrj(e.key)}
+              className="text-zinc-500 text-2xl text-left ml-10 font-mono "
+            >
+              {e.title}
+            </button>
+          </li>
         ))}
-      </div>
+      </ul>
     </div>
   );
 }
