@@ -1,6 +1,10 @@
 import Task from "./Task";
+import { ProjectContext } from "../store/projectContext";
+import { useContext } from "react";
 
-export default function ShowProject({ project, deletePrj, onAddTask, delTsk }) {
+export default function ShowProject({ project }) {
+  const { delPrj, addTask, delTask } = useContext(ProjectContext);
+
   return (
     <div className="flex flex-col h-screen">
       <section className="h-1/3 flex flex-col mt-6 gap-4">
@@ -9,7 +13,7 @@ export default function ShowProject({ project, deletePrj, onAddTask, delTsk }) {
             {project.title}
           </h1>
           <button
-            onClick={() => deletePrj(project.key)}
+            onClick={() => delPrj(project.key)}
             className="text-white bg-black basis-1/5 font-mono text-xl h-10 rounded-md m-2"
           >
             Delete
@@ -26,7 +30,7 @@ export default function ShowProject({ project, deletePrj, onAddTask, delTsk }) {
       </section>
       <hr className="my-4 border-t-2 border-zinc-300 rounded-full mr-60" />
       <section className="h-3/5 ">
-        <Task addTask={onAddTask} prj={project} handleDelete={delTsk} />
+        <Task prj={project} />
       </section>
     </div>
   );

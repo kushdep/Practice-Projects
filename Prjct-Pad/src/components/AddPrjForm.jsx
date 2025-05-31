@@ -1,8 +1,11 @@
-import { useRef } from "react";
 import { v4 as uuid } from "uuid";
 import Modal from "./Modals";
+import { ProjectContext } from "../store/projectContext";
+import { useContext, useRef } from "react";
 
-export default function AddprjForm({ onChngPrjData, cancelState }) {
+export default function AddprjForm() {
+  const { addPrjData, chngPrjState } = useContext(ProjectContext);
+
   const title = useRef();
   const desc = useRef();
   const date = useRef();
@@ -26,7 +29,7 @@ export default function AddprjForm({ onChngPrjData, cancelState }) {
       </Modal>
       <div className="flex justify-end mt-5 font-mono">
         <button
-          onClick={cancelState}
+          onClick={chngPrjState}
           className="text-black text-xl w-20 h-10 rounded-md m-2"
         >
           Cancel
@@ -39,7 +42,7 @@ export default function AddprjForm({ onChngPrjData, cancelState }) {
             ) {
               openModal();
             } else {
-              onChngPrjData({
+              addPrjData({
                 key: uuid(),
                 title: title.current.value,
                 desc: desc.current.value,

@@ -1,7 +1,10 @@
-import { useState,useRef } from "react";
+import { useState, useRef, useContext } from "react";
 import Modal from "./Modals";
+import { ProjectContext } from "../store/projectContext";
 
-export default function Task({ addTask, prj, handleDelete }) {
+export default function Task({ prj }) {
+  const { addTask, delTask } = useContext(ProjectContext);
+
   const [task, setTask] = useState("");
   const modal = useRef();
 
@@ -63,7 +66,7 @@ export default function Task({ addTask, prj, handleDelete }) {
                   {e.taskDesc}
                 </li>
                 <button
-                  onClick={() => handleDelete(e.key, prj.key)}
+                  onClick={() => delTask(e.key, prj.key)}
                   className="w-1/5 text-lg font-mono"
                 >
                   Clear
