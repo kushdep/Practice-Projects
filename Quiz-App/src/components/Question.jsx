@@ -9,6 +9,16 @@ export default function Question({ index, onSelectAnswer, onSkipAns }) {
     isCorrect: null,
   });
 
+  let timer = 10000;
+
+  if (answer.selectedAnswer) {
+    timer = 1000;
+  }
+
+  if (answer.isCorrect != null) {
+    timer = 2000;
+  }
+
   function handleSelectAnswer(ans) {
     setAnswer({
       selectedAnswer: ans,
@@ -28,15 +38,20 @@ export default function Question({ index, onSelectAnswer, onSkipAns }) {
   }
 
   let answerState = "";
-  if (answer.selectedAnswer && answer.isCorrect!=null) {
+  if (answer.selectedAnswer && answer.isCorrect != null) {
     answerState = answer.isCorrect ? "correct" : "wrong";
-  }else if(answer.selectedAnswer){
-    answerState='answered'
+  } else if (answer.selectedAnswer) {
+    answerState = "answered";
   }
 
   return (
     <div id="question">
-      <ProgressBar timeOut={10000} onTimeOut={onSkipAns} />
+      <ProgressBar
+        key={timer}
+        timeOut={timer}
+        onTimeOut={answer.selectedAnswer !== "" ? onSkipAns : null}
+        mode={answerState}
+      />
       <h2>{QUESTIONS[index].text}</h2>
       <Answers
         answers={QUESTIONS[index].answers}
