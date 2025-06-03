@@ -1,15 +1,13 @@
-import { useCallback, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import QUESTIONS from "../question";
-import ProgressBar from "./ProgressBar";
 import quizOverImg from "../assets/quiz-complete.png";
+import Question from "./Question";
 
 export default function Quiz() {
   const [userAnswers, setUserAnswers] = useState([]);
-  const activeQuestionIndex = userAnswers.length;
 
-  let isQuizOver = activeQuestionIndex === QUESTIONS.length;
-  console.log("isQuizOver" + activeQuestionIndex);
-  console.log("isQuizOver" + isQuizOver);
+  const activeQuestionIndex = userAnswers.length;
+  const isQuizOver = activeQuestionIndex === QUESTIONS.length;
 
   const handleSelectAnswer = useCallback(function handleSelectAnswer(selAnswer) {
     setUserAnswers((prev) => [...prev, selAnswer]);
@@ -18,7 +16,6 @@ export default function Quiz() {
   const handleSkipAns = useCallback(() => handleSelectAnswer(null),[handleSelectAnswer]);
 
   if (isQuizOver) {
-    console.log("OVER");
     return (
       <div id="summary">
         <img src={quizOverImg} alt="trophy" />
@@ -27,22 +24,14 @@ export default function Quiz() {
     );
   }
 
-  const shuffledAnswers = QUESTIONS[activeQuestionIndex].answers;
-  shuffledAnswers.sort(() => Math.random() - 0.5);
-
   return (
     <div id="quiz">
-      <div id="question">
-        <ProgressBar key={activeQuestionIndex} timeOut={10000} onTimeOut={handleSkipAns} />
-        <h2>{QUESTIONS[activeQuestionIndex].text}</h2>
-        <ul id="answers">
-          {shuffledAnswers.map((a) => (
-            <li key={a} className="answer">
-              <button onClick={() => handleSelectAnswer(a)}>{a}</button>
-            </li>
-          ))}
-        </ul>
-      </div>
+      <Question
+        key={activeQuestionIndex}
+        index={activeQuestionIndex}
+        onSelectAnswer={handleSelectAnswer}
+        onSkipAns={handleSkipAns}
+      />
     </div>
   );
 }
