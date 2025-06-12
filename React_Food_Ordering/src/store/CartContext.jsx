@@ -20,25 +20,60 @@ function cartReducer(state, action) {
           ...existingItem,
           quantity: existingItem.quantity + 1,
         };
-        updatedItems.push({...action.item,updatedItem})
+        updatedItems.push({ ...action.item, updatedItem });
       } else {
         updatedItems.push({ ...action.item, quantity: 1 });
       }
-      return {...state,items:updatedItems}
+      return { ...state, items: updatedItems };
     }
     case "REMOVE_ITEM": {
+      const existingCartItemIndex = state.items.findIndex(
+        (i) => i.id === action.id
+      );
+      const existingCartItem = state.item[existingCartItemIndex];
+
+      const updatedItems = [...state];
+      if (existingCartItemIndex === 1) {
+        updatedItems.splice(existingCartItemIndex, 1);
+      } else {
+        const updatedItem = {
+          ...existingCartItem,
+          quantity: existingCartItem.quantity - 1,
+        };
+        updatedItems.items[existingCartItemIndex] = updatedItem;
+      }
+      return { ...state, items: updatedItems };
     }
     default: {
       throw Error("Unknown action: " + action.type);
     }
   }
-  return state;
 }
 
 export function CartContextProvider({ children }) {
-    const [ ] =  useReducer(cartReducer, { items: [] });
+  const [cart, dispatchCartAction] = useReducer(cartReducer, { items: [] });
 
-  return <CartContext>{children}</CartContext>;
+  function addItem(item) {
+    dispatchCartAction({
+      type: "ADD_ITEM",
+      item,
+    });
+  }
+
+  function removeItem(id) {
+    dispatchCartAction({
+      type: "REMOVE_ITEM",
+      id,
+    });
+  }
+
+  const contxVal = {
+    items: cart.items,
+    addItem,
+    removeItem
+  };
+
+  return <CartContext val={contxVal}>{children}</CartContext>;
 }
 
 export default CartContext;
