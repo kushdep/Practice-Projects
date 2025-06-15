@@ -20,7 +20,9 @@ function cartReducer(state, action) {
           ...existingItem,
           quantity: existingItem.quantity + 1,
         };
-        updatedItems.push({ ...action.item, updatedItem });
+        console.log(action.item)
+        console.log(updatedItem)
+        updatedItems[existingItemIndex] = updatedItem;
       } else {
         updatedItems.push({ ...action.item, quantity: 1 });
       }
@@ -45,7 +47,7 @@ function cartReducer(state, action) {
       return { ...state, items: updatedItems };
     }
     default: {
-      throw Error("Unknown action: " + action.type);
+      throw Error("Action: " + action.type);
     }
   }
 }
@@ -70,10 +72,12 @@ export function CartContextProvider({ children }) {
   const contxVal = {
     items: cart.items,
     addItem,
-    removeItem
+    removeItem,
   };
 
-  return <CartContext val={contxVal}>{children}</CartContext>;
+  console.log(contxVal);
+
+  return <CartContext value={contxVal}>{children}</CartContext>;
 }
 
 export default CartContext;
