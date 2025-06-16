@@ -14,6 +14,7 @@ export default function Cart({}) {
     userCntxPrgrs.hideCart();
   }
 
+
   const cartTotal = ctxVal.items.reduce(
     (prevTtl, item) => prevTtl + item.quantity * item.price,
     0
@@ -23,7 +24,14 @@ export default function Cart({}) {
       <h2>YouR cArT</h2>
       <ul>
         {ctxVal.items.map((e) => (
-          <CartItem key={e.id} item={e} />
+          <CartItem
+            key={e.id}
+            name={e.name}
+            quantity={e.quantity}
+            price={e.price}
+            onDecrease={()=>ctxVal.removeItem(e.id)}
+            onIncrease={()=>ctxVal.addItem(e)}
+          />
         ))}
       </ul>
       <p className="cart-total">{currencyFormatter.format(cartTotal)}</p>

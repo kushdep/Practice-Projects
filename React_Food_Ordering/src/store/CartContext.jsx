@@ -32,17 +32,20 @@ function cartReducer(state, action) {
       const existingCartItemIndex = state.items.findIndex(
         (i) => i.id === action.id
       );
-      const existingCartItem = state.item[existingCartItemIndex];
-
-      const updatedItems = [...state];
-      if (existingCartItemIndex === 1) {
+      console.log(action.id)
+      console.log(existingCartItemIndex)
+      console.log(state)
+      const existingCartItem = state.items[existingCartItemIndex];
+ 
+      const updatedItems = [...state.items];
+      if (existingCartItem.quantity === 1) {
         updatedItems.splice(existingCartItemIndex, 1);
       } else {
         const updatedItem = {
           ...existingCartItem,
           quantity: existingCartItem.quantity - 1,
         };
-        updatedItems.items[existingCartItemIndex] = updatedItem;
+        updatedItems[existingCartItemIndex] = updatedItem;
       }
       return { ...state, items: updatedItems };
     }
