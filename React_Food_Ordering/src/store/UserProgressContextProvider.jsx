@@ -32,5 +32,7 @@ export default function UserProgressContextProvider({ children }) {
     hideCheckOut,
   };
 
+  console.log(userCtxVal)
+  
   return <UserProgressContext value={userCtxVal}>{children}</UserProgressContext>;
 }

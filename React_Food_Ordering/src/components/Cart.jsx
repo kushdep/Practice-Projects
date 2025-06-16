@@ -22,7 +22,10 @@ export default function Cart({}) {
     0
   );
   return (
-    <Modal open={userCntxPrgrs.progress === "cart"} onClose={handleCloseCart}>
+    <Modal
+      open={userCntxPrgrs.progress === "cart"}
+      onClose={userCntxPrgrs.progress === "cart" ? handleCloseCart : null}
+    >
       <h2>YouR cArT</h2>
       <ul>
         {ctxVal.items.map((e) => (
@@ -42,7 +45,7 @@ export default function Cart({}) {
           Close
         </Button>
         {ctxVal.items.length > 0 && (
-           <Button onClick={handleGoToCheckout}>Go to Checkout</Button>
+          <Button onClick={handleGoToCheckout}>Go to Checkout</Button>
         )}
       </p>
     </Modal>
