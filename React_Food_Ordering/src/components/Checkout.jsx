@@ -1,14 +1,30 @@
 import { useContext } from "react";
 import Modal from "./Modal";
+import Error from "./Error";
 import CartContext from "../store/CartContext";
 import { currencyFormatter } from "../utilities/formatter";
 import Input from "./UI/Input";
 import Button from "./UI/Button";
+import useHttp from "../hooks/usehttp";
 import { UserProgressContext } from "../store/UserProgressContextProvider";
 import { useActionState } from "react";
 
+const reqConfig = {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+};
+
 export default function Checkout() {
   const ctxVal = useContext(CartContext);
+  const {
+    data,
+    isLoading: isSending,
+    error,
+    sendRequest,
+    clearData,
+  } = useHttp("http://localhost:3000/orders", reqConfig);
 
   function checkoutAction(prevState, formData) {
     const name = formData.get("name");
@@ -17,22 +33,36 @@ export default function Checkout() {
     const city = formData.get("city");
     const street = formData.get("street");
 
+    sendRequest(
+      JSON.stringify({
+        order: {
+          items: ctxVal.items,
+          customer: {
+            name,
+            street,
+            email,
+            postalCode,
+            city,
+          },
+        },
+      })
+    );
 
     return {
-        name,
-        street,
-        email,
-        postalCode,
-        city,
+      name,
+      street,
+      email,
+      postalCode,
+      city,
     };
   }
 
   const [formState, formAction] = useActionState(checkoutAction, {
-      name: "",
-      street: "",
-      email: "",
-      postalCode: "",
-      city: "",
+    name: "",
+    street: "",
+    email: "",
+    postalCode: "",
+    city: "",
   });
 
   const totalAmt = ctxVal.items.reduce(
@@ -45,19 +75,39 @@ export default function Checkout() {
     cntxPrgrs.hideCheckOut();
   }
 
-  async function handleSubmit() {
-    await fetch('http://localhost:3000/orders',{
-      method:'POST',
-      headers:{
-        'Content-Type':'application/json'
-      },
-      body:JSON.stringify({
-        order:{
-          items:ctxVal.items,
-          customer:formState
-        }
-      })
-    })
+  function handleFinish() {
+    cntxPrgrs.hideCheckOut();
+    ctxVal.clearCartItem();
+    clearData();
+  }
+
+  let actions = (
+    <>
+      <Button onClick={handleClose} type="button" textOnly>
+        Close
+      </Button>
+      <Button
+        onClick={async () => {
+          console.log(formState);
+        }}
+      >
+        Submit Order
+      </Button>
+    </>
+  );
+
+  if (isSending) {
+    <span>Placing Order....</span>;
+  }
+
+  if (!error && data) {
+    return (
+      <Modal open={cntxPrgrs.progress === "checkout"} onclose={handleFinish}>
+        <h2>Success!!</h2>
+        <p>Order Submitted Successfully...</p>
+        <Button onClick={handleFinish}>Okay</Button>
+      </Modal>
+    );
   }
 
   return (
@@ -103,12 +153,8 @@ export default function Checkout() {
             defaultValue={formState?.city}
           />
         </div>
-        <p className="modal-actions">
-          <Button onClick={handleClose} type="button" textOnly>
-            Close
-          </Button>
-          <Button onClick={handleSubmit}>Submit Order</Button>
-        </p>
+        {error && <Error title="Failed to Submit Order " message={error} />}
+        <p className="modal-actions">{actions}</p>
       </form>
     </Modal>
   );
