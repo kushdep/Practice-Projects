@@ -5,7 +5,7 @@ function ProductDetail(){
 
     return<>
     <p>{params.pId}</p>
-    <p><Link to=".." relative="path ">Back</Link></p>
+    <p><Link to=".." relative="path">Back</Link></p>
     </>
 }
 

@@ -11,7 +11,7 @@ function Products() {
     return <>
         <h1>Products Page</h1>
         <ul>
-            {PRODUCTS.map((e) => <li><Link to={e.id}>{e.title}</Link></li>)}
+            {PRODUCTS.map((e) => <li><Link to={`${e.id}`}>{e.title}</Link></li>)}
         </ul>
     </>
 }
