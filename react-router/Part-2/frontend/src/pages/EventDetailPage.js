@@ -1,12 +1,13 @@
 import { NavLink, useParams } from "react-router-dom"
 
-function EventDetailPage(){
+function EventDetailPage() {
     const params = useParams()
-    return<>
-        <h1>{params.eventId}</h1>
+    return <>
+        <h1>Event Detail Page</h1>
+        <h2>Event Id :- {params.eventId}</h2>
         <NavLink to=".." relative="path">Back</NavLink>
-    </> 
-    
+    </>
+
 }
 
 export default EventDetailPage
