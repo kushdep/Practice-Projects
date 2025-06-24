@@ -31,5 +31,10 @@ export async function action({request,params}){
   if(!response.ok){
     throw new Error("Cannot fetch formdata")
   }
+
+  if(response.status === 422){
+    return response
+  }
+
   return redirect('/events')
 }

@@ -1,9 +1,16 @@
-import { Link } from 'react-router-dom';
+import { Link, redirect, useSubmit } from 'react-router-dom';
 import classes from './EventItem.module.css';
 
 function EventItem({ event }) {
+  const submit = useSubmit()
+
   function startDeleteHandler() {
-    // ...
+    const permission = window.confirm("Are you sure")
+    if(permission){
+      submit(null,{
+        method:"DELETE"
+      })
+    }
   }
 
   return (
