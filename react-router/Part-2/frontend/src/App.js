@@ -7,6 +7,7 @@ import Root from './root-pages/Root';
 import Error from './pages/Error';
 import EventRootPage from './root-pages/EventRootLayout';
 import EditEventPage from './pages/EditEventPage';
+import { action as formActionFn } from './components/EventForm'
 
 const router = createBrowserRouter([
   {
@@ -20,14 +21,14 @@ const router = createBrowserRouter([
         element: <EventRootPage />,
         children: [
           { index: true, element: <EventPage />, loader: eventPageLoader },
-          { path: 'new', element: <NewEventPage />, action: newActionEvent },
+          { path: 'new', element: <NewEventPage />, action: formActionFn },
           {
             path: ':eventId',
             id: 'event-detail',
             loader: eventDetailLoader,
             children: [
-              { index: true, element: <EventDetailPage /> ,action:eventDeleteAction},
-              { path: 'edit', element: <EditEventPage /> }
+              { index: true, element: <EventDetailPage />, action: eventDeleteAction },
+              { path: 'edit', element: <EditEventPage />, action: formActionFn }
             ]
           },
         ]
