@@ -1,5 +1,4 @@
-import { useNavigate } from 'react-router-dom';
-
+import { Form, redirect, useNavigate } from 'react-router-dom';
 import classes from './EventForm.module.css';
 
 function EventForm({ method, event }) {
@@ -9,22 +8,22 @@ function EventForm({ method, event }) {
   }
 
   return (
-    <form className={classes.form}>
+    <Form method='POST' className={classes.form}>
       <p>
         <label htmlFor="title">Title</label>
-        <input id="title" type="text" name="title" required defaultValue={event.title}/>
+        <input id="title" type="text" name="title" required defaultValue={event?.title}/>
       </p>
       <p>
         <label htmlFor="image" >Image</label>
-        <input id="image" type="url" name="image" required defaultValue={event.image}/>
+        <input id="image" type="url" name="image" required defaultValue={event?.image}/>
       </p>
       <p>
         <label htmlFor="date" >Date</label>
-        <input id="date" type="date" name="date" required defaultValue={event.date}/>
+        <input id="date" type="date" name="date" required defaultValue={event?.date}/>
       </p>
       <p>
         <label htmlFor="description">Description</label>
-        <textarea id="description" name="description" rows="5" required defaultValue={event.description}/>
+        <textarea id="description" name="description" rows="5" required defaultValue={event?.description}/>
       </p>
       <div className={classes.actions}>
         <button type="button" onClick={cancelHandler}>
@@ -32,8 +31,9 @@ function EventForm({ method, event }) {
         </button>
         <button>Save</button>
       </div>
-    </form>
+    </Form>
   );
 }
 
 export default EventForm;
+
