@@ -3,6 +3,11 @@ import classes from './page.module.css';
 import { shareMeals } from '@/lib/action';
 import MealsFormButton from '@/components/meals/meals-form-button';
 
+export const metadata = {
+  title:'All meals'
+}
+
+
 export default function ShareMealPage() {
   return (
     <>

@@ -1,8 +1,10 @@
+'use server'
+
 import { redirect } from "next/navigation"
 import { saveMeal } from "./meals"
+import { revalidatePath } from "next/cache"
 
   export async function shareMeals(formData){
-    'use server'
 
     const meal = {
       title:formData.get('title'),
@@ -13,6 +15,7 @@ import { saveMeal } from "./meals"
       image:formData.get('image')
     }
     await saveMeal(meal)
+    revalidatePath('/meals')
     redirect('/meals')
 
   }
